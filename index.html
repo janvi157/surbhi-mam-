@@ -1,0 +1,3132 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Teacher's Day — Surbhi Mam</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap');
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    overflow-x:hidden;
+    background:#080706;
+    color:#f5ead8;
+    font-family:"DM Sans",sans-serif;
+}
+
+
+/* =========================================================
+   THREE.JS
+========================================================= */
+
+#canvas-container{
+    position:fixed;
+    inset:0;
+    z-index:0;
+}
+
+canvas{
+    display:block;
+}
+
+
+/* =========================================================
+   CINEMATIC OVERLAY
+========================================================= */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    z-index:2;
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            circle at 50% 42%,
+            transparent 15%,
+            rgba(0,0,0,.18) 55%,
+            rgba(0,0,0,.72) 100%
+        );
+}
+
+
+.noise{
+    position:fixed;
+    inset:0;
+    z-index:3;
+    pointer-events:none;
+
+    opacity:.035;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loader{
+    position:fixed;
+    inset:0;
+
+    background:#080706;
+
+    z-index:30;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:
+        opacity 1.2s ease,
+        visibility 1.2s ease;
+}
+
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.loader-inner{
+    text-align:center;
+}
+
+.small{
+    font-size:10px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    color:#c8a978;
+}
+
+.loader-bar{
+    width:180px;
+    height:1px;
+
+    margin-top:22px;
+
+    background:#30291f;
+
+    overflow:hidden;
+}
+
+.loader-bar div{
+    width:0;
+    height:100%;
+
+    background:#d6b77d;
+
+    animation:load 1.8s forwards;
+}
+
+@keyframes load{
+    to{
+        width:100%;
+    }
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro{
+    position:fixed;
+    inset:0;
+
+    z-index:20;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+
+    text-align:center;
+
+    padding:25px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #18120d 0%,
+            #080706 65%
+        );
+
+    transition:
+        opacity 1.5s ease,
+        visibility 1.5s ease;
+}
+
+.intro.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.intro h1{
+    margin-top:20px;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:
+        clamp(52px,8vw,108px);
+
+    font-weight:500;
+
+    line-height:.88;
+
+    max-width:950px;
+
+    letter-spacing:-2px;
+}
+
+.intro h1 span{
+    display:block;
+
+    color:#d6b77d;
+
+    font-style:italic;
+
+    margin-top:8px;
+}
+
+.enter{
+    margin-top:48px;
+
+    border:
+        1px solid
+        rgba(214,183,125,.5);
+
+    background:transparent;
+
+    color:#f5ead8;
+
+    padding:
+        16px 32px;
+
+    border-radius:100px;
+
+    letter-spacing:3px;
+
+    font-size:10px;
+
+    cursor:pointer;
+
+    transition:
+        .45s ease;
+}
+
+.enter:hover{
+    background:#d6b77d;
+
+    color:#17120d;
+
+    transform:
+        translateY(-4px);
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+    position:relative;
+
+    z-index:5;
+
+    min-height:430vh;
+
+    pointer-events:none;
+}
+
+.hero-space{
+    height:100vh;
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.message{
+    position:absolute;
+
+    top:135vh;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    width:min(850px,90%);
+
+    text-align:center;
+
+    opacity:.95;
+}
+
+.message .label{
+    color:#c8a978;
+
+    font-size:10px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+}
+
+.message h2{
+    margin-top:18px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(45px,7vw,88px);
+
+    line-height:.95;
+
+    font-weight:500;
+}
+
+.message p{
+    margin-top:20px;
+
+    font-size:14px;
+
+    line-height:1.9;
+
+    color:#cfc0aa;
+}
+
+
+/* =========================================================
+   FINAL CARD
+========================================================= */
+
+.final{
+    position:absolute;
+
+    top:325vh;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    width:min(900px,90%);
+
+    text-align:center;
+
+    padding:
+        70px 35px;
+
+    border:
+        1px solid
+        rgba(214,183,125,.18);
+
+    background:
+        rgba(20,15,11,.52);
+
+    backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 30px 100px
+        rgba(0,0,0,.4);
+}
+
+.final .heart{
+    font-size:30px;
+
+    color:#d6b77d;
+}
+
+.final h2{
+    margin-top:18px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:
+        clamp(48px,7vw,92px);
+
+    font-weight:500;
+
+    line-height:.9;
+}
+
+.final h2 span{
+    color:#d6b77d;
+
+    font-style:italic;
+}
+
+.final p{
+    margin:
+        30px auto 0;
+
+    max-width:620px;
+
+    color:#c9bba6;
+
+    font-size:14px;
+
+    line-height:1.95;
+}
+
+.signature{
+    margin-top:40px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size:27px;
+
+    font-style:italic;
+
+    color:#e2c48c;
+}
+
+
+/* =========================================================
+   SCROLL HINT
+========================================================= */
+
+.scroll-hint{
+    position:fixed;
+
+    z-index:8;
+
+    bottom:28px;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    text-align:center;
+
+    font-size:9px;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    color:#d8c4a4;
+
+    opacity:.7;
+
+    transition:
+        opacity .5s;
+}
+
+.scroll-line{
+    width:1px;
+
+    height:48px;
+
+    background:
+        linear-gradient(
+            #d6b77d,
+            transparent
+        );
+
+    margin:
+        10px auto 0;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:600px){
+
+    .intro h1{
+        letter-spacing:-1px;
+    }
+
+    .message{
+        top:125vh;
+    }
+
+    .message p{
+        font-size:13px;
+    }
+
+    .final{
+        top:315vh;
+
+        padding:
+            50px 22px;
+    }
+
+    .final p{
+        font-size:13px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     LOADER
+======================================================= -->
+
+<div class="loader" id="loader">
+
+    <div class="loader-inner">
+
+        <div class="small">
+            Preparing your classroom
+        </div>
+
+        <div class="loader-bar">
+            <div></div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     INTRO
+======================================================= -->
+
+<div class="intro" id="intro">
+
+    <div class="small">
+        A little journey back in time
+    </div>
+
+    <h1>
+
+        One More Time...
+
+        <span>
+            Let's Enter Our Classroom.
+        </span>
+
+    </h1>
+
+    <button
+        class="enter"
+        id="enterBtn">
+
+        ENTER CLASSROOM
+
+    </button>
+
+</div>
+
+
+<!-- THREE.JS -->
+<div id="canvas-container"></div>
+
+
+<div class="overlay"></div>
+
+<div class="noise"></div>
+
+
+<!-- =======================================================
+     CONTENT
+======================================================= -->
+
+<div class="content">
+
+    <div class="hero-space"></div>
+
+
+    <!-- MESSAGE -->
+
+    <section class="message">
+
+        <div class="label">
+            Written with gratitude
+        </div>
+
+        <h2>
+
+            For the teacher<br>
+            who made a difference.
+
+        </h2>
+
+        <p>
+
+            Some classrooms are just rooms.<br>
+
+            Some teachers make them unforgettable.
+
+        </p>
+
+    </section>
+
+
+    <!-- FINAL -->
+
+    <section class="final">
+
+        <div class="heart">
+            ♡
+        </div>
+
+        <h2>
+
+            Thank You,<br>
+
+            <span>
+                Surbhi Mam
+            </span>
+
+        </h2>
+
+        <p>
+
+            For every lesson, every little correction,
+            every encouraging word and every moment
+            that helped us become a little better.
+
+            <br><br>
+
+            You didn't just teach us subjects —
+            you left us with memories.
+
+        </p>
+
+        <div class="signature">
+
+            With love & gratitude
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- SCROLL -->
+
+<div
+    class="scroll-hint"
+    id="scrollHint">
+
+    Scroll to explore
+
+    <div class="scroll-line"></div>
+
+</div>
+
+
+
+<!-- =======================================================
+     THREE IMPORT MAP
+======================================================= -->
+
+<script type="importmap">
+
+{
+    "imports": {
+        "three":
+            "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+
+        "three/addons/":
+            "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+}
+
+</script>
+
+
+
+<script type="module">
+
+import * as THREE from "three";
+
+
+
+/* =========================================================
+   BASIC SETUP
+========================================================= */
+
+const scene =
+    new THREE.Scene();
+
+
+scene.background =
+    new THREE.Color(
+        0x080706
+    );
+
+
+scene.fog =
+    new THREE.FogExp2(
+        0x080706,
+        .028
+    );
+
+
+
+/* CAMERA */
+
+const camera =
+    new THREE.PerspectiveCamera(
+        48,
+        window.innerWidth /
+        window.innerHeight,
+        .1,
+        100
+    );
+
+
+camera.position.set(
+    0,
+    3.3,
+    13
+);
+
+
+
+/* RENDERER */
+
+const renderer =
+    new THREE.WebGLRenderer({
+
+        antialias:true,
+
+        alpha:false
+
+    });
+
+
+renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+);
+
+
+renderer.setPixelRatio(
+    Math.min(
+        window.devicePixelRatio,
+        2
+    )
+);
+
+
+renderer.shadowMap.enabled =
+    true;
+
+
+renderer.shadowMap.type =
+    THREE.PCFSoftShadowMap;
+
+
+renderer.toneMapping =
+    THREE.ACESFilmicToneMapping;
+
+
+renderer.toneMappingExposure =
+    1.15;
+
+
+document
+    .getElementById(
+        "canvas-container"
+    )
+    .appendChild(
+        renderer.domElement
+    );
+
+
+
+/* =========================================================
+   LIGHTING
+========================================================= */
+
+const ambient =
+    new THREE.HemisphereLight(
+        0xffe6c2,
+        0x100b07,
+        1.8
+    );
+
+scene.add(
+    ambient
+);
+
+
+
+/* SUNSET */
+
+const sunset =
+    new THREE.DirectionalLight(
+        0xffbd73,
+        4
+    );
+
+
+sunset.position.set(
+    -7,
+    8,
+    5
+);
+
+
+sunset.castShadow =
+    true;
+
+
+sunset.shadow.mapSize.width =
+    2048;
+
+sunset.shadow.mapSize.height =
+    2048;
+
+
+scene.add(
+    sunset
+);
+
+
+
+/* BOARD LIGHT */
+
+const boardLight =
+    new THREE.PointLight(
+        0xffd99a,
+        5,
+        15
+    );
+
+
+boardLight.position.set(
+    0,
+    5.3,
+    -4.5
+);
+
+
+scene.add(
+    boardLight
+);
+
+
+
+/* =========================================================
+   MATERIALS
+========================================================= */
+
+const wallMat =
+    new THREE.MeshStandardMaterial({
+
+        color:0x241b14,
+
+        roughness:.9
+
+    });
+
+
+
+const floorMat =
+    new THREE.MeshStandardMaterial({
+
+        color:0x15100d,
+
+        roughness:.7
+
+    });
+
+
+
+const woodMat =
+    new THREE.MeshStandardMaterial({
+
+        color:0x4a2e1c,
+
+        roughness:.65
+
+    });
+
+
+
+const darkWood =
+    new THREE.MeshStandardMaterial({
+
+        color:0x24150d,
+
+        roughness:.85
+
+    });
+
+
+
+const goldMat =
+    new THREE.MeshStandardMaterial({
+
+        color:0xc39a58,
+
+        metalness:.65,
+
+        roughness:.3
+
+    });
+
+
+
+const blackboardMat =
+    new THREE.MeshStandardMaterial({
+
+        color:0x18251f,
+
+        roughness:1
+
+    });
+
+
+
+/* =========================================================
+   BOX HELPER
+========================================================= */
+
+function box(
+    w,
+    h,
+    d,
+    material,
+    x=0,
+    y=0,
+    z=0
+){
+
+    const mesh =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+                w,
+                h,
+                d
+            ),
+
+            material
+
+        );
+
+
+    mesh.position.set(
+        x,
+        y,
+        z
+    );
+
+
+    mesh.castShadow =
+        true;
+
+
+    mesh.receiveShadow =
+        true;
+
+
+    scene.add(
+        mesh
+    );
+
+
+    return mesh;
+
+}
+
+
+
+/* =========================================================
+   CYLINDER HELPER
+========================================================= */
+
+function cylinder(
+    radius,
+    height,
+    material,
+    x=0,
+    y=0,
+    z=0
+){
+
+    const mesh =
+        new THREE.Mesh(
+
+            new THREE.CylinderGeometry(
+                radius,
+                radius,
+                height,
+                32
+            ),
+
+            material
+
+        );
+
+
+    mesh.position.set(
+        x,
+        y,
+        z
+    );
+
+
+    mesh.castShadow =
+        true;
+
+
+    mesh.receiveShadow =
+        true;
+
+
+    scene.add(
+        mesh
+    );
+
+
+    return mesh;
+
+}
+
+
+
+/* =========================================================
+   CLASSROOM
+========================================================= */
+
+
+/* FLOOR */
+
+box(
+    18,
+    .3,
+    22,
+    floorMat,
+    0,
+    -.15,
+    0
+);
+
+
+
+/* BACK WALL */
+
+box(
+    18,
+    10,
+    .3,
+    wallMat,
+    0,
+    5,
+    -7
+);
+
+
+
+/* LEFT WALL */
+
+box(
+    .3,
+    10,
+    22,
+    wallMat,
+    -9,
+    5,
+    0
+);
+
+
+
+/* RIGHT WALL */
+
+box(
+    .3,
+    10,
+    22,
+    wallMat,
+    9,
+    5,
+    0
+);
+
+
+
+/* CEILING */
+
+box(
+    18,
+    .3,
+    22,
+    wallMat,
+    0,
+    10,
+    0
+);
+
+
+
+/* =========================================================
+   BLACKBOARD
+========================================================= */
+
+const boardGroup =
+    new THREE.Group();
+
+
+boardGroup.position.set(
+    0,
+    5,
+    0
+);
+
+
+scene.add(
+    boardGroup
+);
+
+
+
+/* OUTER FRAME */
+
+const frame =
+    new THREE.Mesh(
+
+        new THREE.BoxGeometry(
+            8.8,
+            4.5,
+            .28
+        ),
+
+        darkWood
+
+    );
+
+
+frame.position.set(
+    0,
+    0,
+    -6.78
+);
+
+
+frame.castShadow =
+    true;
+
+
+boardGroup.add(
+    frame
+);
+
+
+
+/* BOARD */
+
+const board =
+    new THREE.Mesh(
+
+        new THREE.BoxGeometry(
+            8.15,
+            3.85,
+            .12
+        ),
+
+        blackboardMat
+
+    );
+
+
+board.position.set(
+    0,
+    0,
+    -6.58
+);
+
+
+boardGroup.add(
+    board
+);
+
+
+
+/* GOLD FRAME */
+
+const topFrame =
+    new THREE.Mesh(
+
+        new THREE.BoxGeometry(
+            8.35,
+            .10,
+            .16
+        ),
+
+        goldMat
+
+    );
+
+
+topFrame.position.set(
+    0,
+    2.1,
+    -6.48
+);
+
+
+boardGroup.add(
+    topFrame
+);
+
+
+
+const bottomFrame =
+    topFrame.clone();
+
+
+bottomFrame.position.y =
+    -2.1;
+
+
+boardGroup.add(
+    bottomFrame
+);
+
+
+
+const leftFrame =
+    new THREE.Mesh(
+
+        new THREE.BoxGeometry(
+            .10,
+            4.2,
+            .16
+        ),
+
+        goldMat
+
+    );
+
+
+leftFrame.position.set(
+    -4.15,
+    0,
+    -6.48
+);
+
+
+boardGroup.add(
+    leftFrame
+);
+
+
+
+const rightFrame =
+    leftFrame.clone();
+
+
+rightFrame.position.x =
+    4.15;
+
+
+boardGroup.add(
+    rightFrame
+);
+
+
+
+/* =========================================================
+   CHALK CANVAS
+========================================================= */
+
+const chalkCanvas =
+    document.createElement(
+        "canvas"
+    );
+
+
+chalkCanvas.width =
+    1800;
+
+
+chalkCanvas.height =
+    900;
+
+
+const ctx =
+    chalkCanvas.getContext(
+        "2d"
+    );
+
+
+
+/* =========================================================
+   CHALK TEXT
+========================================================= */
+
+function drawChalkText(
+    progress=1
+){
+
+    ctx.clearRect(
+        0,
+        0,
+        chalkCanvas.width,
+        chalkCanvas.height
+    );
+
+
+    ctx.textAlign =
+        "center";
+
+
+    ctx.textBaseline =
+        "middle";
+
+
+    /* CHALK DUST BACKGROUND */
+
+    for(
+        let i=0;
+        i<1300;
+        i++
+    ){
+
+        const x =
+            Math.random() *
+            chalkCanvas.width;
+
+        const y =
+            Math.random() *
+            chalkCanvas.height;
+
+
+        ctx.fillStyle =
+            `rgba(
+                235,
+                232,
+                215,
+                ${Math.random()*.055}
+            )`;
+
+
+        ctx.fillRect(
+            x,
+            y,
+            Math.random()*4+1,
+            Math.random()*2+1
+        );
+
+    }
+
+
+
+    /* MAIN TITLE */
+
+    const title =
+        "HAPPY TEACHER'S DAY";
+
+
+    const visible =
+        Math.floor(
+            title.length *
+            progress
+        );
+
+
+    ctx.font =
+        "bold 118px Georgia";
+
+
+    ctx.shadowColor =
+        "rgba(255,255,240,.45)";
+
+
+    ctx.shadowBlur =
+        7;
+
+
+    ctx.fillStyle =
+        "rgba(240,238,220,.94)";
+
+
+    ctx.fillText(
+
+        title.substring(
+            0,
+            visible
+        ),
+
+        900,
+        330
+
+    );
+
+
+
+    /* UNDERLINE */
+
+    if(
+        progress > .55
+    ){
+
+        const lineProgress =
+            Math.min(
+                (
+                    progress-.55
+                )/.45,
+                1
+            );
+
+
+        ctx.shadowBlur =
+            4;
+
+
+        ctx.strokeStyle =
+            "rgba(225,218,195,.78)";
+
+
+        ctx.lineWidth =
+            6;
+
+
+        ctx.beginPath();
+
+
+        ctx.moveTo(
+            510,
+            410
+        );
+
+
+        ctx.lineTo(
+            510 +
+            780 *
+            lineProgress,
+            410
+        );
+
+
+        ctx.stroke();
+
+    }
+
+
+
+    /* NAME */
+
+    if(
+        progress > .62
+    ){
+
+        const nameProgress =
+            Math.min(
+                (
+                    progress-.62
+                )/.38,
+                1
+            );
+
+
+        const name =
+            "Surbhi Mam ♡";
+
+
+        const visibleName =
+            Math.floor(
+                name.length *
+                nameProgress
+            );
+
+
+        ctx.font =
+            "italic 108px Georgia";
+
+
+        ctx.shadowColor =
+            "rgba(255,235,190,.45)";
+
+
+        ctx.shadowBlur =
+            10;
+
+
+        ctx.fillStyle =
+            "rgba(226,205,164,.96)";
+
+
+        ctx.fillText(
+
+            name.substring(
+                0,
+                visibleName
+            ),
+
+            900,
+            555
+
+        );
+
+    }
+
+
+    /* CHALK SCRATCHES */
+
+    ctx.shadowBlur =
+        0;
+
+
+    for(
+        let i=0;
+        i<350;
+        i++
+    ){
+
+        const x =
+            300 +
+            Math.random()*1200;
+
+
+        const y =
+            180 +
+            Math.random()*500;
+
+
+        ctx.fillStyle =
+            `rgba(
+                240,
+                235,
+                215,
+                ${Math.random()*.07}
+            )`;
+
+
+        ctx.fillRect(
+            x,
+            y,
+            Math.random()*8,
+            1
+        );
+
+    }
+
+}
+
+
+
+/* INITIAL */
+
+drawChalkText(
+    0
+);
+
+
+
+/* TEXTURE */
+
+const chalkTexture =
+    new THREE.CanvasTexture(
+        chalkCanvas
+    );
+
+
+chalkTexture.colorSpace =
+    THREE.SRGBColorSpace;
+
+
+chalkTexture.minFilter =
+    THREE.LinearFilter;
+
+
+chalkTexture.magFilter =
+    THREE.LinearFilter;
+
+
+chalkTexture.needsUpdate =
+    true;
+
+
+
+/* TEXT MATERIAL */
+
+const textMaterial =
+    new THREE.MeshBasicMaterial({
+
+        map:
+            chalkTexture,
+
+        transparent:
+            true,
+
+        depthWrite:
+            false
+
+    });
+
+
+
+/* TEXT PLANE */
+
+const textPlane =
+    new THREE.Mesh(
+
+        new THREE.PlaneGeometry(
+            8.0,
+            4.0
+        ),
+
+        textMaterial
+
+    );
+
+
+/*
+ IMPORTANT:
+ Board is facing +Z.
+ Camera is on +Z side.
+ Therefore chalk must sit slightly
+ in front of board toward camera.
+*/
+
+textPlane.position.set(
+    0,
+    5,
+    -6.47
+);
+
+
+textPlane.rotation.set(
+    0,
+    0,
+    0
+);
+
+
+scene.add(
+    textPlane
+);
+
+
+
+/* =========================================================
+   TEACHER DESK
+========================================================= */
+
+function createDesk(
+    x,
+    z
+){
+
+    const group =
+        new THREE.Group();
+
+
+    group.position.set(
+        x,
+        0,
+        z
+    );
+
+
+    scene.add(
+        group
+    );
+
+
+    /* TOP */
+
+    const top =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+                3.4,
+                .28,
+                1.5
+            ),
+
+            woodMat
+
+        );
+
+
+    top.position.y =
+        2.1;
+
+
+    top.castShadow =
+        true;
+
+
+    group.add(
+        top
+    );
+
+
+
+    /* LEGS */
+
+    const legs = [
+
+        [-1.25,1,-.5],
+        [1.25,1,-.5],
+        [-1.25,1,.5],
+        [1.25,1,.5]
+
+    ];
+
+
+    legs.forEach(
+        p=>{
+
+            const leg =
+                new THREE.Mesh(
+
+                    new THREE.BoxGeometry(
+                        .18,
+                        2,
+                        .18
+                    ),
+
+                    darkWood
+
+                );
+
+
+            leg.position.set(
+                p[0],
+                p[1],
+                p[2]
+            );
+
+
+            leg.castShadow =
+                true;
+
+
+            group.add(
+                leg
+            );
+
+        }
+    );
+
+
+
+    /* BOOK */
+
+    const book =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+                .8,
+                .12,
+                1.1
+            ),
+
+            new THREE.MeshStandardMaterial({
+
+                color:0x713b31,
+
+                roughness:.65
+
+            })
+
+        );
+
+
+    book.position.set(
+        -.6,
+        2.32,
+        0
+    );
+
+
+    book.rotation.y =
+        .25;
+
+
+    group.add(
+        book
+    );
+
+
+
+    /* APPLE */
+
+    const apple =
+        new THREE.Mesh(
+
+            new THREE.SphereGeometry(
+                .23,
+                24,
+                24
+            ),
+
+            new THREE.MeshStandardMaterial({
+
+                color:0x8d3325,
+
+                roughness:.4
+
+            })
+
+        );
+
+
+    apple.position.set(
+        .65,
+        2.4,
+        .15
+    );
+
+
+    group.add(
+        apple
+    );
+
+
+
+    /* STEM */
+
+    const stem =
+        new THREE.Mesh(
+
+            new THREE.CylinderGeometry(
+                .025,
+                .025,
+                .18,
+                8
+            ),
+
+            darkWood
+
+        );
+
+
+    stem.position.set(
+        .65,
+        2.62,
+        .15
+    );
+
+
+    group.add(
+        stem
+    );
+
+}
+
+
+createDesk(
+    0,
+    -3.7
+);
+
+
+
+/* =========================================================
+   STUDENT DESKS
+========================================================= */
+
+function createStudentDesk(
+    x,
+    z,
+    scale=1
+){
+
+    const group =
+        new THREE.Group();
+
+
+    group.position.set(
+        x,
+        0,
+        z
+    );
+
+
+    group.scale.setScalar(
+        scale
+    );
+
+
+    scene.add(
+        group
+    );
+
+
+    /* DESK TOP */
+
+    const top =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+                2.1,
+                .2,
+                1.1
+            ),
+
+            woodMat
+
+        );
+
+
+    top.position.y =
+        1.45;
+
+
+    top.castShadow =
+        true;
+
+
+    group.add(
+        top
+    );
+
+
+
+    /* LEGS */
+
+    const legs = [
+
+        [-.75,.7,-.35],
+        [.75,.7,-.35],
+        [-.75,.7,.35],
+        [.75,.7,.35]
+
+    ];
+
+
+    legs.forEach(
+        p=>{
+
+            const leg =
+                new THREE.Mesh(
+
+                    new THREE.BoxGeometry(
+                        .12,
+                        1.4,
+                        .12
+                    ),
+
+                    darkWood
+
+                );
+
+
+            leg.position.set(
+                p[0],
+                p[1],
+                p[2]
+            );
+
+
+            group.add(
+                leg
+            );
+
+        }
+    );
+
+
+
+    /* CHAIR SEAT */
+
+    const seat =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+                1.4,
+                .16,
+                .9
+            ),
+
+            woodMat
+
+        );
+
+
+    seat.position.set(
+        0,
+        .8,
+        .9
+    );
+
+
+    group.add(
+        seat
+    );
+
+
+
+    /* CHAIR BACK */
+
+    const back =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+                1.4,
+                1,
+                .12
+            ),
+
+            woodMat
+
+        );
+
+
+    back.position.set(
+        0,
+        1.25,
+        1.25
+    );
+
+
+    group.add(
+        back
+    );
+
+}
+
+
+
+/* DESK ROWS */
+
+const deskPositions = [
+
+    [-4,-.2],
+    [0,-.2],
+    [4,-.2],
+
+    [-4,2.7],
+    [0,2.7],
+    [4,2.7],
+
+    [-4,5.4],
+    [0,5.4],
+    [4,5.4]
+
+];
+
+
+deskPositions.forEach(
+    (p,i)=>{
+
+        createStudentDesk(
+            p[0],
+            p[1],
+            i > 5 ? .9 : 1
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   STYLIZED TEACHER
+========================================================= */
+
+const teacher =
+    new THREE.Group();
+
+
+teacher.position.set(
+    0,
+    0,
+    -3
+);
+
+
+scene.add(
+    teacher
+);
+
+
+
+/* BODY */
+
+const body =
+    new THREE.Mesh(
+
+        new THREE.CapsuleGeometry(
+            .55,
+            1.4,
+            8,
+            16
+        ),
+
+        new THREE.MeshStandardMaterial({
+
+            color:0x5b3c48,
+
+            roughness:.75
+
+        })
+
+    );
+
+
+body.position.y =
+    2.1;
+
+
+body.castShadow =
+    true;
+
+
+teacher.add(
+    body
+);
+
+
+
+/* HEAD */
+
+const head =
+    new THREE.Mesh(
+
+        new THREE.SphereGeometry(
+            .43,
+            32,
+            32
+        ),
+
+        new THREE.MeshStandardMaterial({
+
+            color:0xd49a73,
+
+            roughness:.8
+
+        })
+
+    );
+
+
+head.position.y =
+    3.55;
+
+
+head.castShadow =
+    true;
+
+
+teacher.add(
+    head
+);
+
+
+
+/* HAIR */
+
+const hair =
+    new THREE.Mesh(
+
+        new THREE.SphereGeometry(
+            .46,
+            32,
+            32
+        ),
+
+        new THREE.MeshStandardMaterial({
+
+            color:0x241813,
+
+            roughness:1
+
+        })
+
+    );
+
+
+hair.scale.set(
+    1.05,
+    .65,
+    1.05
+);
+
+
+hair.position.y =
+    3.82;
+
+
+teacher.add(
+    hair
+);
+
+
+
+/* LEGS */
+
+[-.25,.25].forEach(
+    x=>{
+
+        const leg =
+            new THREE.Mesh(
+
+                new THREE.CylinderGeometry(
+                    .12,
+                    .14,
+                    .9,
+                    16
+                ),
+
+                darkWood
+
+            );
+
+
+        leg.position.set(
+            x,
+            .85,
+            0
+        );
+
+
+        teacher.add(
+            leg
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   CLOCK
+========================================================= */
+
+const clockGroup =
+    new THREE.Group();
+
+
+clockGroup.position.set(
+    6.8,
+    7,
+    -6.35
+);
+
+
+scene.add(
+    clockGroup
+);
+
+
+
+const clockFace =
+    new THREE.Mesh(
+
+        new THREE.CylinderGeometry(
+            .65,
+            .65,
+            .12,
+            48
+        ),
+
+        new THREE.MeshStandardMaterial({
+
+            color:0xe6d8bd,
+
+            roughness:.6
+
+        })
+
+    );
+
+
+clockFace.rotation.x =
+    Math.PI/2;
+
+
+clockGroup.add(
+    clockFace
+);
+
+
+
+/* CLOCK CENTER */
+
+const clockCenter =
+    new THREE.Mesh(
+
+        new THREE.SphereGeometry(
+            .07,
+            16,
+            16
+        ),
+
+        darkWood
+
+    );
+
+
+clockCenter.position.z =
+    -.1;
+
+
+clockGroup.add(
+    clockCenter
+);
+
+
+
+/* =========================================================
+   PLANTS
+========================================================= */
+
+function createPlant(
+    x,
+    z
+){
+
+    cylinder(
+        .45,
+        .65,
+
+        new THREE.MeshStandardMaterial({
+
+            color:0x704b36,
+
+            roughness:.8
+
+        }),
+
+        x,
+        .35,
+        z
+    );
+
+
+
+    for(
+        let i=0;
+        i<7;
+        i++
+    ){
+
+        const leaf =
+            new THREE.Mesh(
+
+                new THREE.SphereGeometry(
+                    .25,
+                    16,
+                    16
+                ),
+
+                new THREE.MeshStandardMaterial({
+
+                    color:0x34503a,
+
+                    roughness:.9
+
+                })
+
+            );
+
+
+        leaf.scale.set(
+            .6,
+            1.5,
+            .3
+        );
+
+
+        leaf.position.set(
+
+            x +
+            (Math.random()-.5)*.7,
+
+            .9 +
+            Math.random()*.7,
+
+            z +
+            (Math.random()-.5)*.5
+
+        );
+
+
+        leaf.rotation.z =
+            Math.random()-.5;
+
+
+        scene.add(
+            leaf
+        );
+
+    }
+
+}
+
+
+createPlant(
+    -7,
+    -5.8
+);
+
+
+createPlant(
+    7,
+    -5.8
+);
+
+
+
+/* =========================================================
+   CEILING FAN
+========================================================= */
+
+const fan =
+    new THREE.Group();
+
+
+fan.position.set(
+    0,
+    9.5,
+    0
+);
+
+
+scene.add(
+    fan
+);
+
+
+
+const fanMotor =
+    new THREE.Mesh(
+
+        new THREE.CylinderGeometry(
+            .25,
+            .25,
+            .35,
+            20
+        ),
+
+        darkWood
+
+    );
+
+
+fanMotor.rotation.x =
+    Math.PI/2;
+
+
+fan.add(
+    fanMotor
+);
+
+
+
+for(
+    let i=0;
+    i<4;
+    i++
+){
+
+    const blade =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+                .18,
+                2.8,
+                .08
+            ),
+
+            woodMat
+
+        );
+
+
+    blade.position.y =
+        1.4;
+
+
+    blade.rotation.z =
+        i *
+        Math.PI/2;
+
+
+    blade.castShadow =
+        true;
+
+
+    fan.add(
+        blade
+    );
+
+}
+
+
+
+/* =========================================================
+   WINDOWS
+========================================================= */
+
+function createWindow(
+    x,
+    z
+){
+
+    const glow =
+        new THREE.Mesh(
+
+            new THREE.PlaneGeometry(
+                4,
+                4
+            ),
+
+            new THREE.MeshBasicMaterial({
+
+                color:0xffc878,
+
+                transparent:true,
+
+                opacity:.16
+
+            })
+
+        );
+
+
+    glow.position.set(
+        x,
+        5,
+        z
+    );
+
+
+    glow.rotation.y =
+        x < 0
+        ? Math.PI/2
+        : -Math.PI/2;
+
+
+    scene.add(
+        glow
+    );
+
+}
+
+
+createWindow(
+    -8.8,
+    -1
+);
+
+
+createWindow(
+    8.8,
+    -1
+);
+
+
+
+/* =========================================================
+   DUST PARTICLES
+========================================================= */
+
+const particleCount =
+    900;
+
+
+const particlePositions =
+    new Float32Array(
+        particleCount * 3
+    );
+
+
+for(
+    let i=0;
+    i<particleCount;
+    i++
+){
+
+    particlePositions[
+        i*3
+    ] =
+        (Math.random()-.5)*16;
+
+
+    particlePositions[
+        i*3+1
+    ] =
+        Math.random()*9;
+
+
+    particlePositions[
+        i*3+2
+    ] =
+        (Math.random()-.5)*15;
+
+}
+
+
+
+const particleGeometry =
+    new THREE.BufferGeometry();
+
+
+particleGeometry.setAttribute(
+
+    "position",
+
+    new THREE.BufferAttribute(
+        particlePositions,
+        3
+    )
+
+);
+
+
+
+const particleMaterial =
+    new THREE.PointsMaterial({
+
+        color:0xf1d29a,
+
+        size:.026,
+
+        transparent:true,
+
+        opacity:.5
+
+    });
+
+
+
+const particles =
+    new THREE.Points(
+
+        particleGeometry,
+
+        particleMaterial
+
+    );
+
+
+scene.add(
+    particles
+);
+
+
+
+/* =========================================================
+   CAMERA SYSTEM
+========================================================= */
+
+let scrollProgress =
+    0;
+
+
+let currentZ =
+    13;
+
+
+let currentY =
+    3.3;
+
+
+let currentX =
+    0;
+
+
+
+function updateCamera(){
+
+    /*
+        0 = outside classroom
+
+        0.25 = entering
+
+        0.50 = classroom
+
+        0.75 = blackboard
+
+        1 = final
+    */
+
+
+    let targetZ;
+
+    let targetY;
+
+    let targetX;
+
+
+    if(
+        scrollProgress < .25
+    ){
+
+        const p =
+            scrollProgress / .25;
+
+
+        targetZ =
+            13 -
+            p * 4;
+
+
+        targetY =
+            3.3 +
+            p * .2;
+
+
+        targetX =
+            Math.sin(p*Math.PI) *
+            .6;
+
+    }
+
+    else if(
+        scrollProgress < .65
+    ){
+
+        const p =
+            (
+                scrollProgress-.25
+            )/.4;
+
+
+        targetZ =
+            9 -
+            p * 6;
+
+
+        targetY =
+            3.5 +
+            p * 1.0;
+
+
+        targetX =
+            Math.sin(
+                p*Math.PI*1.2
+            )*.45;
+
+    }
+
+    else{
+
+        const p =
+            (
+                scrollProgress-.65
+            )/.35;
+
+
+        targetZ =
+            3 -
+            p * 1.5;
+
+
+        targetY =
+            4.5 +
+            p * .7;
+
+
+        targetX =
+            Math.sin(
+                p*Math.PI
+            )*.25;
+
+    }
+
+
+
+    currentZ +=
+        (
+            targetZ -
+            currentZ
+        ) * .045;
+
+
+    currentY +=
+        (
+            targetY -
+            currentY
+        ) * .045;
+
+
+    currentX +=
+        (
+            targetX -
+            currentX
+        ) * .045;
+
+
+    camera.position.set(
+        currentX,
+        currentY,
+        currentZ
+    );
+
+
+    /* LOOK AT BOARD */
+
+    const lookX =
+        Math.sin(
+            scrollProgress *
+            Math.PI
+        ) * .15;
+
+
+    const lookY =
+        3.5 +
+        scrollProgress*.7;
+
+
+    const lookZ =
+        -4.5 -
+        scrollProgress*.8;
+
+
+    camera.lookAt(
+        lookX,
+        lookY,
+        lookZ
+    );
+
+}
+
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+window.addEventListener(
+    "scroll",
+    ()=>{
+
+        const max =
+            document.body.scrollHeight -
+            window.innerHeight;
+
+
+        scrollProgress =
+            Math.max(
+                0,
+                Math.min(
+                    1,
+                    window.scrollY /
+                    max
+                )
+            );
+
+
+        updateCamera();
+
+
+        const hint =
+            document.getElementById(
+                "scrollHint"
+            );
+
+
+        hint.style.opacity =
+            scrollProgress > .06
+            ? "0"
+            : ".7";
+
+    }
+);
+
+
+
+/* =========================================================
+   ENTER
+========================================================= */
+
+document
+    .getElementById(
+        "enterBtn"
+    )
+    .addEventListener(
+        "click",
+        ()=>{
+
+            document
+                .getElementById(
+                    "intro"
+                )
+                .classList.add(
+                    "hide"
+                );
+
+
+            animateChalk();
+
+
+            window.scrollTo({
+
+                top:0,
+
+                behavior:"smooth"
+
+            });
+
+        }
+    );
+
+
+
+/* =========================================================
+   CHALK ANIMATION
+========================================================= */
+
+function animateChalk(){
+
+    let start =
+        null;
+
+
+    function frame(
+        time
+    ){
+
+        if(
+            !start
+        ){
+
+            start =
+                time;
+
+        }
+
+
+        const elapsed =
+            time -
+            start;
+
+
+        const duration =
+            4500;
+
+
+        const p =
+            Math.min(
+                elapsed /
+                duration,
+                1
+            );
+
+
+        /*
+           Smooth chalk reveal
+        */
+
+        const eased =
+            1 -
+            Math.pow(
+                1-p,
+                3
+            );
+
+
+        drawChalkText(
+            eased
+        );
+
+
+        chalkTexture.needsUpdate =
+            true;
+
+
+        if(
+            p < 1
+        ){
+
+            requestAnimationFrame(
+                frame
+            );
+
+        }
+
+    }
+
+
+    requestAnimationFrame(
+        frame
+    );
+
+}
+
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+const clock =
+    new THREE.Clock();
+
+
+
+function animate(){
+
+    requestAnimationFrame(
+        animate
+    );
+
+
+    const t =
+        clock.getElapsedTime();
+
+
+    /* FAN */
+
+    fan.rotation.y =
+        t*.75;
+
+
+
+    /* DUST */
+
+    particles.rotation.y =
+        t*.012;
+
+
+    particles.position.y =
+        Math.sin(
+            t*.18
+        )*.08;
+
+
+
+    /* TEACHER BREATHING */
+
+    teacher.position.y =
+        Math.sin(
+            t*1.3
+        )*.015;
+
+
+
+    /* LIGHT FLICKER */
+
+    sunset.intensity =
+        3.6 +
+        Math.sin(
+            t*.4
+        )*.2;
+
+
+
+    /* BOARD LIGHT */
+
+    boardLight.intensity =
+        4.7 +
+        Math.sin(
+            t*.7
+        )*.15;
+
+
+
+    updateCamera();
+
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
+
+
+animate();
+
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+window.addEventListener(
+    "load",
+    ()=>{
+
+        setTimeout(
+            ()=>{
+
+                document
+                    .getElementById(
+                        "loader"
+                    )
+                    .classList.add(
+                        "hide"
+                    );
+
+            },
+            1900
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+window.addEventListener(
+    "resize",
+    ()=>{
+
+        camera.aspect =
+            window.innerWidth /
+            window.innerHeight;
+
+
+        camera.updateProjectionMatrix();
+
+
+        renderer.setSize(
+            window.innerWidth,
+            window.innerHeight
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>
+```
+
